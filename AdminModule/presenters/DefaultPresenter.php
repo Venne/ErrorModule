@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Venne:CMS (version 2.0-dev released on $WCDATE$)
+ * This file is part of the Venne:CMS (https://github.com/Venne)
  *
- * Copyright (c) 2011 Josef Kříž pepakriz@gmail.com
+ * Copyright (c) 2011 Josef Kříž (pepakriz
+ * @gmail.com)
  *
  * For the full copyright and license information, please view
  * the file license.txt that was distributed with this source code.
@@ -15,8 +16,8 @@ use Nette\Forms\Form;
 use Nette\Web\Html;
 
 /**
- * @author Josef Kříž
- * 
+ * @author Josef Kříž <pepakriz@gmail.com>
+ *
  * @secured
  */
 class DefaultPresenter extends \Venne\Application\UI\AdminPresenter {
@@ -51,16 +52,18 @@ class DefaultPresenter extends \Venne\Application\UI\AdminPresenter {
 
 	public function createComponentForm($name)
 	{
-		$repository = $this->context->errorRepository;
+		$repository = $this->context->error->errorRepository;
 		$entity = $repository->createNew();
 
-		$form = $this->context->createErrorFormControl($entity);
-		$form->setSuccessLink("default");
-		$form->setFlashMessage("Error has been created");
-		$form->setSubmitLabel("Create");
-		$form->onSave[] = function($form) use ($repository) {
-					$repository->save($form->entity);
-				};
+		$form = $this->context->error->createErrorForm();
+		$form->setEntity($entity);
+		$form->addSubmit("_submit", "Save");
+		$form->onSuccess[] = function($form) use ($repository)
+		{
+			$repository->save($form->entity);
+			$form->presenter->flashMessage("Error has been created");
+			$form->presenter->redirect("default");
+		};
 		return $form;
 	}
 
@@ -68,35 +71,26 @@ class DefaultPresenter extends \Venne\Application\UI\AdminPresenter {
 
 	public function createComponentFormEdit($name)
 	{
-		$repository = $this->context->errorRepository;
+		$repository = $this->context->error->errorRepository;
 		$entity = $repository->find($this->getParam("id"));
 
-		$form = $this->context->createErrorFormControl($entity);
-		$form->setSuccessLink("this");
-		$form->setFlashMessage("Error has been updated");
-		$form->setSubmitLabel("Update");
-		$form->onSave[] = function($form) use ($repository) {
-					$repository->update($form->entity);
-				};
+		$form = $this->context->error->createErrorForm();
+		$form->setEntity($entity);
+		$form->addSubmit("_submit", "Save");
+		$form->onSuccess[] = function($form) use ($repository)
+		{
+			$repository->save($form->entity);
+			$form->presenter->flashMessage("Error has been updated");
+			$form->presenter->redirect("this");
+		};
 		return $form;
-	}
-
-
-
-	public function beforeRender()
-	{
-		parent::beforeRender();
-		$this->setTitle("Venne:CMS | Pages administration");
-		$this->setKeywords("pages administration");
-		$this->setDescription("pages administration");
-		$this->setRobots(self::ROBOTS_NOINDEX | self::ROBOTS_NOFOLLOW);
 	}
 
 
 
 	public function handleDelete($id)
 	{
-		$this->context->errorRepository->delete($this->context->errorRepository->find($this->getParam("id")));
+		$this->context->error->errorRepository->delete($this->context->error->errorRepository->find($this->getParam("id")));
 		$this->flashMessage("Error page has been deleted", "success");
 		$this->redirect("this", array("id" => NULL));
 	}
@@ -105,7 +99,7 @@ class DefaultPresenter extends \Venne\Application\UI\AdminPresenter {
 
 	public function renderDefault()
 	{
-		$this->template->table = $this->context->errorRepository->findAll();
+		$this->template->table = $this->context->error->errorRepository->findAll();
 	}
 
 }

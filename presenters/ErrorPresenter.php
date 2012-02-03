@@ -19,19 +19,19 @@ class ErrorPresenter extends \Venne\Application\UI\FrontPresenter {
 
 		} elseif ($exception instanceof \Nette\Application\BadRequestException) {
 			$code = $exception->getCode();
-			
+
 		} else {
 			$code = 500;
 			Debugger::log($exception, Debugger::ERROR); // and log exception
 		}
-		
-		$this->template->error = $this->context->errorRepository->findOneBy(array("code"=>$code));
+
+		$this->template->error = $this->context->errorRepository->findOneBy(array("code" => $code));
 		$this->template->code = $code;
-		if($this->template->error){
+		if ($this->template->error) {
 			$this->setView("error");
 		}
-		
-		
+
+
 	}
 
 }

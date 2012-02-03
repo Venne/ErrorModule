@@ -1,30 +1,30 @@
 <?php
 
 /**
- * Venne:CMS (version 2.0-dev released on $WCDATE$)
+ * This file is part of the Venne:CMS (https://github.com/Venne)
  *
- * Copyright (c) 2011 Josef Kříž pepakriz@gmail.com
+ * Copyright (c) 2011 Josef Kříž (pepakriz
+ * @gmail.com)
  *
  * For the full copyright and license information, please view
  * the file license.txt that was distributed with this source code.
  */
 
-namespace App\ErrorModule;
+namespace App\ErrorModule\Entities;
 
 /**
- * @author Josef Kříž
+ * @author Josef Kříž <pepakriz@gmail.com>
  * @Entity(repositoryClass="\Venne\Doctrine\ORM\BaseRepository")
  * @Table(name="error")
- * 
+ *
  * @property $text
  * @property $website
  * @property $code
- */
-class ErrorEntity extends \Venne\Doctrine\ORM\BaseEntity {
+ */ class ErrorEntity extends \Venne\Doctrine\ORM\BaseEntity {
 
 
 	/**
-	 * @Column(type="integer") 
+	 * @Column(type="integer")
 	 */
 	protected $code;
 
