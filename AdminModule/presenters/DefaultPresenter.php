@@ -3,8 +3,7 @@
 /**
  * This file is part of the Venne:CMS (https://github.com/Venne)
  *
- * Copyright (c) 2011 Josef Kříž (pepakriz
- * @gmail.com)
+ * Copyright (c) 2011, 2012 Josef Kříž (http://www.josef-kriz.cz)
  *
  * For the full copyright and license information, please view
  * the file license.txt that was distributed with this source code.
@@ -12,15 +11,15 @@
 
 namespace App\ErrorModule\AdminModule;
 
-use Nette\Forms\Form;
-use Nette\Web\Html;
+use Venne;
 
 /**
  * @author Josef Kříž <pepakriz@gmail.com>
  *
  * @secured
  */
-class DefaultPresenter extends \Venne\Application\UI\AdminPresenter {
+class DefaultPresenter extends \Venne\Application\UI\AdminPresenter
+{
 
 
 	/** @persistent */
@@ -72,7 +71,7 @@ class DefaultPresenter extends \Venne\Application\UI\AdminPresenter {
 	public function createComponentFormEdit($name)
 	{
 		$repository = $this->context->error->errorRepository;
-		$entity = $repository->find($this->getParam("id"));
+		$entity = $repository->find($this->getParameter("id"));
 
 		$form = $this->context->error->createErrorForm();
 		$form->setEntity($entity);
