@@ -18,7 +18,7 @@ use Venne;
  *
  * @secured
  */
-class ErrorPresenter extends \Venne\Application\UI\FrontPresenter
+class ErrorPresenter extends \App\CoreModule\Presenters\FrontPresenter
 {
 
 
